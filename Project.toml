@@ -1,0 +1,4 @@
+name = "ContourIntegrals"
+uuid = "6a132690-a590-47c4-bd18-f8366a4f4167"
+authors = ["Asad Hussain <asadh@utexas.edu>"]
+version = "0.1.0"
