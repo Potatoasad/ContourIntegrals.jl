@@ -1,3 +1,4 @@
+#=
 import Plots.plot
 import Plots.plot!
 
@@ -7,3 +8,4 @@ function plot(func,contour::Contour; kwargs...)
     plot!(p,x -> imag(func(x)),[0,1]; kwargs...)
     display(p)
 end
+=#
