@@ -1,4 +1,5 @@
 import Plots.plot
+import Plots.plot!
 
 function plot(func,contour::Contour; kwargs...)
     f = TransformIntegrand(func,contour)
