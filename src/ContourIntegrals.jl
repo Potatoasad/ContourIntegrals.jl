@@ -10,6 +10,6 @@ include("InfiniteLine.jl")
 include("Integration.jl")
 
 export LineSegment, SemiInfiniteLine, InfiniteLine
-export Integrate, TrasformIntegrand, plot
+export Integrate, TransformIntegrand, plot
 
 end # module
