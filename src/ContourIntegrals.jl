@@ -18,5 +18,6 @@ include("Integration.jl")
 
 export LineSegment, SemiInfiniteLine, InfiniteLine
 export Integrate, TransformIntegrand, plot
+export ⊕ , ⊗
 
 end # module

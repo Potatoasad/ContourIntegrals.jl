@@ -1,4 +1,4 @@
-L = LineSegment(0,2*π)
+L = LineSegment(0.0,2π,true)
 @test Integrate(x -> sin(x)^2,L)[1] |> real ≈ π
 
 Semi = SemiInfiniteLine(0,1,true)
