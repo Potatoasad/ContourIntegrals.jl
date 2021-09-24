@@ -1,13 +1,8 @@
 struct LineSegment <: Contour
     z0::Complex{Float64}
     z1::Complex{Float64}
+    orientation::Bool
 end
 
-function TransformIntegrand(func,contour::LineSegment)
-    f = let z0=contour.z0; z1=contour.z1
-    function NewIntegrand(s)
-            func(s*(z1-z0)+z0)*(z1-z0)
-    end
-    end
-    f
-end
+ϕ⁺(C::LineSegment) = let z1=C.z1, z0=C.z0; s -> s*(z1-z0)+z0 end
+Jac⁺(C::LineSegment) = let z1=C.z1, z0=C.z0; s -> (z1-z0) end
