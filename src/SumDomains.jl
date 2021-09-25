@@ -3,7 +3,8 @@ struct SumDomain{d,p,T} <: Domain{d}
 end
 
 function SumDomain(x::Tuple)
-    if foldl(==,dims.(x))
+    dimensions = dims.(x)
+    if all(isequal(dimensions[1]),dimensions)
         return SumDomain{dims(x[1]),length(x),typeof(x)}(x)
     else
         return error("The domains must have equal dimension")
@@ -65,4 +66,4 @@ function TransformIntegrand(f::Function, C::SumDomain{d,p,T}) where {d,p,T}
             error("How many dimensions do you want?")
         end
     end
-end 
+end
