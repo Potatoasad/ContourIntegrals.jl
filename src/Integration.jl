@@ -27,17 +27,18 @@ end
 function Integrate(f::Function, C::Domain{d}; error_norm=Cubature.PAIRED, abstol=1e-10, kws...) where d
     f□ = let f=f, C=C; TransformIntegrand(f,C) end
     f□v = let f□ = f□, d=d;  Converter(f□ , d) end
-    (val,err) = pcubature_v(2, f□v, zeros(d), ones(d); error_norm=error_norm, abstol=1e-10, kws...)
+    (val,err) = pcubature_v(2, f□v, zeros(d), ones(d); error_norm=error_norm, abstol=abstol, kws...)
     val[1]+im*val[2] , sqrt(err[1]^2 + err[2]^2)
 end
 
 function Integrate(f::Function, C::SumDomain{d,p,T}; error_norm=Cubature.PAIRED,abstol=1e-10,kws...) where {d,p,T}
     valt = ComplexF64(0.0);
     errt = Float64(0.0);
+    doms = C.domains;
     for i ∈ 1:p
-        val,error = Integrate(f,C.domains[i]; error_norm=Cubature.PAIRED, abstol=1e-10, kws...)
+        val,error = Integrate(f,doms[i]; error_norm=Cubature.PAIRED, abstol=abstol, kws...)
         valt += val
         errt += error^2
     end
-    val, sqrt(errt)
+    valt, sqrt(errt)
 end
