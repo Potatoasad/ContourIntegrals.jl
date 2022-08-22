@@ -29,7 +29,7 @@ abstract type IntegrationMethod end
 struct h_adaptive <: IntegrationMethod end
 struct p_adaptive <: IntegrationMethod end
 
-Integrate(f::Function, C::Domain{d}; error_norm=Cubature.PAIRED, abstol=1e-10, kws...) where d
+function Integrate(f::Function, C::Domain{d}; error_norm=Cubature.PAIRED, abstol=1e-10, kws...) where d
     Integrate(f, C, h_adaptive(); error_norm=Cubature.PAIRED, abstol=1e-10, kws...)
 end
 
