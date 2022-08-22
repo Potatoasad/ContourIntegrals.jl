@@ -20,5 +20,6 @@ export LineSegment, SemiInfiniteLine, InfiniteLine
 export Integrate, TransformIntegrand, plot
 export ⊕ , ⊗
 export dims
+export h_adaptive, p_adaptive
 
 end # module

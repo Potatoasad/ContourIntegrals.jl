@@ -24,7 +24,23 @@ function Converter(f1s::Function,dims::Int)
     end
 end
 
-function Integrate(f::Function, C::Domain{d}; error_norm=Cubature.PAIRED, abstol=1e-10, kws...) where d
+abstract type IntegrationMethod end
+
+struct h_adaptive <: IntegrationMethod end
+struct p_adaptive <: IntegrationMethod end
+
+Integrate(f::Function, C::Domain{d}; error_norm=Cubature.PAIRED, abstol=1e-10, kws...) where d
+    Integrate(f, C, h_adaptive(); error_norm=Cubature.PAIRED, abstol=1e-10, kws...)
+end
+
+function Integrate(f::Function, C::Domain{d}, IntegrationMethod::h_adaptive; error_norm=Cubature.PAIRED, abstol=1e-10, kws...) where d
+    f□ = let f=f, C=C; TransformIntegrand(f,C) end
+    f□v = let f□ = f□, d=d;  Converter(f□ , d) end
+    (val,err) = hcubature_v(2, f□v, zeros(d), ones(d); error_norm=error_norm, abstol=abstol, kws...)
+    val[1]+im*val[2] , sqrt(err[1]^2 + err[2]^2)
+end
+
+function Integrate(f::Function, C::Domain{d}, IntegrationMethod::p_adaptive; error_norm=Cubature.PAIRED, abstol=1e-10, kws...) where d
     f□ = let f=f, C=C; TransformIntegrand(f,C) end
     f□v = let f□ = f□, d=d;  Converter(f□ , d) end
     (val,err) = pcubature_v(2, f□v, zeros(d), ones(d); error_norm=error_norm, abstol=abstol, kws...)
